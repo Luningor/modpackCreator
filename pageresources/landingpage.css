@@ -1,0 +1,138 @@
+@font-face {
+  font-family: ARCO;
+  src: url('ARCO.ttf');
+}
+
+@keyframes rotate-icon {
+	0% {rotate: 0deg;}
+	25% {rotate: 90deg;}
+	50% {rotate: 180deg;}
+	75% {rotate: 270deg;}
+	100% {rotate: 0deg;}
+}
+
+body {
+	cursor: url(default.cur), auto;
+	margin: 0;
+	background-color: #DCD7C9;
+}
+
+#main-title-div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #2C3930;
+}
+
+#main-title-div:hover #main-title {
+	letter-spacing: .25rem;
+}
+
+#main-logo {
+	width: 2.3rem;
+	height: 2.3rem;
+	padding: .5rem .5rem;
+}
+
+#main-title, #cover-title {
+	all: unset;
+	padding: .5rem 0;
+	display: inline-block;
+	font-family: 'Courier New', monospace;
+	font-size: 2rem;
+	color: #739e81;
+	transition-duration: .2s;
+}
+
+#title-decorator {
+	width: 100%;
+	padding: .3rem 0;
+	background-color: #3F4F44;
+	display: block;
+}
+
+#cover {
+	width: 100%;
+	height: 100%;
+	background-color: #2C3930;
+/*	background: linear-gradient(180deg,rgba(44, 57, 48, 1) 35%, rgba(69, 107, 81, .9) 100%);*/
+	opacity: 1;
+	position: absolute;
+	display: block;
+	top: 0;
+	z-index: 1;
+	transition-duration: .5s;
+}
+
+#title-cover-container {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+#spinning-logo {
+	width: 10rem;
+	height: 10rem;
+	animation-name: rotate-icon;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+	display: block;
+}
+
+#cover-title {
+	display: block;
+	font-size: 3rem;
+	padding: 1.5rem;
+	position: absolute;
+	bottom: 0;
+}
+
+.hidden-cover {
+/*	height: 0!important;*/
+	opacity: 0!important;
+	z-index: -1;
+}
+
+#divider {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	width: calc(100% - 7rem);
+	height: calc(100% - 10.9rem);
+	position: fixed;
+	align-items: center;
+	justify-items: center;
+	grid-gap: 2.5rem;
+	padding: 3.5rem;
+}
+
+.main-links {
+	all: unset;
+	cursor: url(link.cur), auto;
+	display: flex;
+	justify-content: center;
+    align-items: center;
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
+    position: relative;
+    text-align: center;
+    font-family: 'ARCO', 'Courier New', monospace;
+    font-weight: 700;
+    color: #3F4F44;
+    background-color: #647e6c;
+    font-size: 3rem;
+    text-transform: uppercase;
+    border-radius: 15px;
+    letter-spacing: .5rem;
+    transition-duration: .2s;
+}
+
+.main-links:hover {
+	color: #c5d7cb;
+	font-size: 3.2rem;
+	padding: .5rem;
+}

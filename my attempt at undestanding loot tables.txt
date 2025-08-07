@@ -1,0 +1,28 @@
+loot_tables*
+->	loot_table
+	->	type
+	->	functions*
+		->	function
+		->	args
+	->	pools*
+		->	pool
+			->	rolls
+			->	bonus_rolls
+			->	entries*
+				->	entry
+					->	expand
+					->	type
+					->	conditions*
+						->	condition
+					->	weight
+					->	quality
+					->	children*
+						->	entries
+			->	conditions*
+				->	condition
+			->	functions*
+				->	function
+				->	args
+	->	random_sequence
+
+// * means many
