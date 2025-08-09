@@ -14,11 +14,9 @@ function get_blocks_from_tag($tag) {
 	foreach($tagContents as $entry) {
 		$cleanEntry = rtrim($entry, '?');
 
-		// It's a block
-		if(strpos($cleanEntry, '#') === false)
+		if(strpos($cleanEntry, '#') === false) // It's a block
 			$results[] = $cleanEntry;
-		// It's a tag
-		else {
+		else { // It's a tag
 			$tagBlocks = get_items_from_tag($cleanEntry);
 			$results = array_merge($results, $tagBlocks);
 		}
@@ -40,11 +38,9 @@ function get_items_from_tag($tag) {
 	foreach($tagContents as $entry) {
 		$cleanEntry = rtrim($entry, '?');
 
-		// It's an item
-		if(strpos($cleanEntry, '#') === false)
+		if(strpos($cleanEntry, '#') === false) // It's an item
 			$results[] = $cleanEntry;
-		// It's a tag
-		else {
+		else { // It's a tag
 			$tagItems = get_items_from_tag($cleanEntry);
 			$results = array_merge($results, $tagItems);
 		}
@@ -66,11 +62,9 @@ function get_fluids_from_tag($tag) {
 	foreach($tagContents as $entry) {
 		$cleanEntry = rtrim($entry, '?');
 
-		// It's a fluid
-		if(strpos($cleanEntry, '#') === false)
+		if(strpos($cleanEntry, '#') === false) // It's a fluid
 			$results[] = $cleanEntry;
-		// It's a tag
-		else {
+		else { // It's a tag
 			$tagFluids = get_items_from_tag($cleanEntry);
 			$results = array_merge($results, $tagFluids);
 		}
@@ -92,11 +86,9 @@ function get_mobs_from_tag($tag) {
 	foreach($tagContents as $entry) {
 		$cleanEntry = rtrim($entry, '?');
 
-		// It's a mob
-		if(strpos($cleanEntry, '#') === false)
+		if(strpos($cleanEntry, '#') === false) // It's a mob
 			$results[] = $cleanEntry;
-		// It's a tag
-		else {
+		else { // It's a tag
 			$tagMobs = get_items_from_tag($cleanEntry);
 			$results = array_merge($results, $tagMobs);
 		}

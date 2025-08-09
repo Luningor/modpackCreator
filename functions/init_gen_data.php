@@ -1,10 +1,10 @@
 <?php
 //header("Content-Type: application/json; charset=UTF-8");
-include_once 'json_to_string.php';
 include_once 'file_to_json.php';
 include_once 'get_all_filepaths.php';
 include_once 'get_x_from_tag.php';
 include_once 'get_loot_table_items.php';
+include_once 'get_recipe_x.php';
 
 // Assumes modpack data is already on savedData/
 	// savedData/
@@ -14,11 +14,14 @@ include_once 'get_loot_table_items.php';
 	//			/registries/
 	//			/tags/
 function initialize_generated_data() {
+	// As this function takes forever, it's best to disable the execution max time for the entire duration of it
+	$limit = ini_get('max_execution_time');
+	set_time_limit(0);
+
 	// Initializate folder
 	if(!is_dir('../generatedData')) mkdir('../generatedData');
 
-	// Get all recipe files
-	$recipeFiles = get_all_filepaths('../savedData/recipes');
+	// Get loot table files
 	$lootTableFiles = get_all_filepaths('../savedData/loot_tables');
 
 	// Initialize JSONs
@@ -206,15 +209,41 @@ function initialize_generated_data() {
 					$itemJSON->data->$item->loot_tables[] = $lootTableName;
 		}
 
+	// Get recipe files
+	$recipeFiles = get_all_filepaths('../savedData/recipes');
+
 	// Fill recipe data
-		//foreach($recipeFiles as $recipePath) {
-		//	if(!is_file($recipePath)) continue;
-		//	$recipeName = str_replace('../savedData/tags/minecraft/item/', '', $recipePath);
-		//	$recipeName = str_replace('.json', '', $recipeName);
-		//	$isolatedRecipeName = $recipeName;
-		//	$pos = strpos($recipeName, '/');
-		//	if($pos !== false) $recipeName = substr_replace($recipeName, ':', $pos, 1);
-		//}
+		foreach($recipeFiles as $recipePath) {
+			if(!is_file($recipePath)) continue;
+			$recipeName = str_replace('../savedData/recipes/', '', $recipePath);
+			$recipeName = str_replace('.json', '', $recipeName);
+			$isolatedRecipeName = $recipeName;
+			$pos = strpos($recipeName, '/');
+			if($pos !== false) $recipeName = substr_replace($recipeName, ':', $pos, 1);
+			$itemIngredients = get_recipe_item_ingredients($isolatedRecipeName);
+			$itemResults = get_recipe_item_results($isolatedRecipeName);
+			$fluidIngredients = get_recipe_fluid_ingredients($isolatedRecipeName);
+			$fluidResults = get_recipe_fluid_ingredients($isolatedRecipeName);
+
+			// As ingredient
+			foreach($itemIngredients as $item)
+				if(isset($itemJSON->data->$item))
+					$itemJSON->data->$item->recipes_ingredient[] = $recipeName;
+
+			foreach($fluidIngredients as $fluid)
+				if(isset($fluidJSON->data->$fluid))
+					$fluidJSON->data->$fluid->recipes_ingredient[] = $recipeName;
+			
+			// As result
+			foreach($itemResults as $item)
+				if(isset($itemJSON->data->$item))
+					$itemJSON->data->$item->recipes_result[] = $recipeName;
+
+			foreach($fluidResults as $fluid)
+				if(isset($fluidJSON->data->$fluid))
+					$fluidJSON->data->$fluid->recipes_result[] = $recipeName;
+		}
+
 
 	// Config JSON:
 		$config = fopen('../generatedData/config.json', 'w');
@@ -227,5 +256,8 @@ function initialize_generated_data() {
 	fclose($fluidData);
 	fclose($mobData);
 	fclose($config);
+
+	// Reset max_execution_time
+	set_time_limit($limit);
 }
 ?>
