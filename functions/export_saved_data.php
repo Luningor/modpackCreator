@@ -12,7 +12,7 @@ function export_saved_data() {
 		// Create iterator
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($folder), RecursiveIteratorIterator::LEAVES_ONLY);
 	
-		foreach ($files as $name => $file) {
+		foreach($files as $name => $file) {
 			// Get real and relative path for current file
 			$filePath = $file->getRealPath();
 			$relativePath = substr($filePath, strlen($folder) + 1);
