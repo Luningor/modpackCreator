@@ -17,7 +17,7 @@ function get_blocks_from_tag($tag) {
 		if(strpos($cleanEntry, '#') === false) // It's a block
 			$results[] = $cleanEntry;
 		else { // It's a tag
-			$tagBlocks = get_items_from_tag($cleanEntry);
+			$tagBlocks = get_blocks_from_tag($cleanEntry);
 			$results = array_merge($results, $tagBlocks);
 		}
 	}
@@ -65,7 +65,7 @@ function get_fluids_from_tag($tag) {
 		if(strpos($cleanEntry, '#') === false) // It's a fluid
 			$results[] = $cleanEntry;
 		else { // It's a tag
-			$tagFluids = get_items_from_tag($cleanEntry);
+			$tagFluids = get_fluids_from_tag($cleanEntry);
 			$results = array_merge($results, $tagFluids);
 		}
 	}
@@ -89,7 +89,7 @@ function get_mobs_from_tag($tag) {
 		if(strpos($cleanEntry, '#') === false) // It's a mob
 			$results[] = $cleanEntry;
 		else { // It's a tag
-			$tagMobs = get_items_from_tag($cleanEntry);
+			$tagMobs = get_mobs_from_tag($cleanEntry);
 			$results = array_merge($results, $tagMobs);
 		}
 	}

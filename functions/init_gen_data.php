@@ -36,6 +36,7 @@ function initialize_generated_data() {
 		foreach($rawItemJSON as $itemID => $data) {
 			$itemJSON->itemIDs[$i] = $itemID;
 			$itemJSON->data->$itemID = json_decode('{}');
+			$itemJSON->data->$itemID->icon = str_replace(":", "/", $itemID).'.png';
 			$itemJSON->data->$itemID->tags = [];
 			$itemJSON->data->$itemID->block_tags = [];
 			$itemJSON->data->$itemID->loot_tables = [];
@@ -134,12 +135,12 @@ function initialize_generated_data() {
 	
 			$tagFluids = get_fluids_from_tag($isolatedTagName);
 			foreach($tagFluids as $fluid) {
-				// It's an item
+				// It's a fluid
 				if(strpos($fluid, '#') === false) {
 					if(isset($fluidJSON->data->$fluid))
 						$fluidJSON->data->$fluid->tags[] = $tagname;
 				}
-				// It's a tag, append all items on tag, recursively
+				// It's a tag, append all fluids on tag, recursively
 				else {
 					$tFluids = get_fluids_from_tag($fluid);
 					// Add items to tag
@@ -162,7 +163,7 @@ function initialize_generated_data() {
 		foreach($rawMobJSON as $mobID => $data) {
 			$mobJSON->mobIDs[$i] = $mobID;
 			$mobJSON->data->$mobID = json_decode('{}');
-			$mobJSON->data->$mobID->loot_table = json_decode('{}');
+			$mobJSON->data->$mobID->loot_table = '';
 			$mobJSON->data->$mobID->tags = [];
 			$i++;
 		}
@@ -179,12 +180,12 @@ function initialize_generated_data() {
 	
 			$tagMobs = get_mobs_from_tag($isolatedTagName);
 			foreach($tagMobs as $mob) {
-				// It's an item
+				// It's a mob
 				if(strpos($mob, '#') === false) {
 					if(isset($mobJSON->data->$mob))
 						$mobJSON->data->$mob->tags[] = $tagname;
 				}
-				// It's a tag, append all items on tag, recursively
+				// It's a tag, append all mobs on tag, recursively
 				else {
 					$tMobs = get_mobs_from_tag($mob);
 					// Add items to tag
@@ -195,9 +196,18 @@ function initialize_generated_data() {
 			}
 		}
 
-	// Fill loot table data
+	// Fill loot table data / mob table data
 		foreach($lootTableFiles as $lootTablePath) {
 			if(!is_file($lootTablePath)) continue;
+
+			// Fill mob loot table
+			if(strpos($lootTablePath, "/entities/") !== false) {
+				$cleanPath = str_replace('../savedData/loot_tables/', '', str_replace('.json', '', $lootTablePath));
+				$mobID = str_replace("/entities/", ':', $cleanPath);
+				if(isset($mobJSON->data->$mobID))
+					$mobJSON->data->$mobID->loot_table = $cleanPath;
+			}
+
 			$lootTableName = str_replace('../savedData/loot_tables/', '', $lootTablePath);
 			$lootTableName = str_replace('.json', '', $lootTableName);
 			$isolatedlootTableName = $lootTableName;
@@ -215,6 +225,7 @@ function initialize_generated_data() {
 	// Fill recipe data
 		foreach($recipeFiles as $recipePath) {
 			if(!is_file($recipePath)) continue;
+	
 			$recipeName = str_replace('../savedData/recipes/', '', $recipePath);
 			$recipeName = str_replace('.json', '', $recipeName);
 			$isolatedRecipeName = $recipeName;
@@ -244,6 +255,9 @@ function initialize_generated_data() {
 					$fluidJSON->data->$fluid->recipes_result[] = $recipeName;
 		}
 
+	// Set recipe base ingredients
+		foreach($itemJSON->data as $item)
+			$item->baseIngredient = empty($item->recipes_result); // && empty($item->loot_tables);
 
 	// Config JSON:
 		$config = fopen('../generatedData/config.json', 'w');

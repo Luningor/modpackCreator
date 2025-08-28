@@ -1,0 +1,18 @@
+Base ingredient == not craftable
+	Not CRAFTABLE, not necesarily non-renewable. Tree saplings (vanilla) are loot table drops, yet they aren't craftable, for example.
+	This is to avoid circular drop/craft logic. Take ores and raw metals.
+	If you can renew ores, then the raw metals are not base ingredients, logically, since they can be 'crafted'. 
+	But if the renewal needs gold to make an ore, then the ore is also not a base ingredient, and none of the materials get EMC'd.
+	Maybe remove the base ingredient status if it's a loot_tables/block/ drop (with the same name as it's ID) and the drop isn't the same block.
+	Logic being, a craftable block being broken, dropping this is clearly a way to 'craft' the item. 
+	The same block being dropped (even with silk touch) by itself it's not an instance of this.
+TO DO: 
+	- Check circular, all non-base ingredient recipe loops for potential base ingredients.
+		Probably tiebreak via loot table drop. (ironic)
+	- Check for equivalents for potential base ingredients
+	- Make recipe node map for crafting tree visualization and debugging
+	- Make duplicate recipes checker
+	- Make recipeData file and file initialization (to save the recipemap)
+	- Add loot table mob delegation for mobData
+	- Get a way to get mobs default stats?
+	- Make potionEffectData (effect|desc)

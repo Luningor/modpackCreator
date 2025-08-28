@@ -38,28 +38,33 @@ function get_recipe_item_ingredients($recipeID) {
 		case 'minecraft:campfire_cooking':
 		case 'minecraft:smoking':
 		case 'minecraft:smelting':
+		case 'minecraft:stonecutting':
 			getItemsFromIngredient($recipeJSON->ingredient, $results);
 			break;
 		case 'minecraft:crafting_shaped':
+		case 'create:mechanical_crafting':
 			foreach($recipeJSON->key as $key)
 				getItemsFromIngredient($key, $results);
 			break;
 		case 'minecraft:crafting_shapeless':
+		case 'create:mixing':
+		case 'create:cutting':
+		case 'create:crushing':
+		case 'create:milling':
+		case 'create:pressing':
+		case 'create:splashing':
+		case 'create:sandpaper_polishing':
 			foreach($recipeJSON->ingredients as $ingredient)
 				getItemsFromIngredient($ingredient, $results);
 			break;
 		case 'minecraft:smithing_transform':
 		case 'minecraft:smithing_trim':
-			// Template
-			getItemsFromIngredient($recipeJSON->template, $results);
-			// Material
-			getItemsFromIngredient($recipeJSON->addition, $results);
-			// Base
-			getItemsFromIngredient($recipeJSON->base, $results);
+			getItemsFromIngredient($recipeJSON->template, $results); // Template
+			getItemsFromIngredient($recipeJSON->addition, $results); // Material
+			getItemsFromIngredient($recipeJSON->base, $results); // Base
 			break;
-		case 'minecraft:stonecutting':
-			getItemsFromIngredient($recipeJSON->ingredient, $results);
 			break;
+		case 'create:compacting':
 		default:
 			echo(`Unknown recipe type: {$recipeJSON->type}`);
 			break;
@@ -76,12 +81,13 @@ function get_recipe_item_results($recipeID) {
 		case 'minecraft:campfire_cooking':
 		case 'minecraft:smoking':
 		case 'minecraft:smelting':
-			$item = isset($recipeJSON->result->item) ? $recipeJSON->result->item : $recipeJSON->result;
+			$item = isset($recipeJSON->result->item) ? $recipeJSON->result->item : $recipeJSON->result; // Can have count
 			$results[] = $item; // Results should be single items afaik
 			break;
 		case 'minecraft:crafting_shaped':
 		case 'minecraft:crafting_shapeless':
 		case 'minecraft:smithing_transform':
+		case 'create:mechanical_crafting':
 			$results[] = $recipeJSON->result->item;
 			break;
 		case 'minecraft:stonecutting':
@@ -90,6 +96,21 @@ function get_recipe_item_results($recipeID) {
 		case 'minecraft:smithing_trim':
 		// Returns same item, screws up EMC calculations later
 			break;
+		case 'create:milling':
+		case 'create:crushing':
+		case 'create:pressing':
+		case 'create:cutting':
+		case 'create:splashing':
+		case 'create:sandpaper_polishing':
+			foreach($recipeJSON->results as $resultItem)
+				$results[] = $resultItem->item;
+			break;
+		case 'create:mixing':
+			foreach($recipeJSON->results as $resultItem)
+				if(isset($resultItem->item)) // Can be fluid
+					$results[] = $resultItem->item;
+			break;
+		case 'create:compacting':
 		default:
 			echo(`Unknown recipe type: {$recipeJSON->type}`);
 			break;
@@ -97,15 +118,71 @@ function get_recipe_item_results($recipeID) {
 	return $results;
 }
 
+// Implementation pending
 function get_recipe_fluid_ingredients($recipeID) {
-	return [];
 	$results = [];
 	if(!is_file("../savedData/recipes/".$recipeID.".json")) return $results;
+	$recipeJSON = file_to_json("../savedData/recipes/".$recipeID.".json");
+	switch($recipeJSON->type) {
+		case 'minecraft:crafting_shaped':
+		case 'minecraft:crafting_shapeless':
+		case 'minecraft:campfire_cooking':
+		case 'minecraft:smoking':
+		case 'minecraft:smelting':
+		case 'minecraft:blasting':
+		case 'minecraft:stonecutting':
+		case 'minecraft:smithing_trim':
+		case 'minecraft:smithing_transform':
+			// Minecraft recipes don't have fluid inputs by default
+		case 'create:mechanical_crafting':
+		case 'create:milling':
+		case 'create:crushing':
+		case 'create:cutting':
+		case 'create:sandpaper_polishing':
+			// So do these create recipe types
+			break;
+		case 'create:pressing':
+		case 'create:splashing':
+		case 'create:mixing':
+		case 'create:compacting':
+		default:
+			break;
+	}
+	return $results;
 }
 
+// Implementation pending
 function get_recipe_fluid_results($recipeID) {
-	return [];
 	$results = [];
-	if(!is_file("../savedData/recipes/".$recipeID.".json")) return $results;	
+	if(!is_file("../savedData/recipes/".$recipeID.".json")) return $results;
+	$recipeJSON = file_to_json("../savedData/recipes/".$recipeID.".json");
+	switch($recipeJSON->type) {
+		case 'minecraft:crafting_shaped':
+		case 'minecraft:crafting_shapeless':
+		case 'minecraft:campfire_cooking':
+		case 'minecraft:smoking':
+		case 'minecraft:smelting':
+		case 'minecraft:blasting':
+		case 'minecraft:stonecutting':
+		case 'minecraft:smithing_trim':
+		case 'minecraft:smithing_transform':
+			// Minecraft recipes don't have fluid outputs by default
+		case 'create:mechanical_crafting':
+		case 'create:milling':
+		case 'create:crushing':
+		case 'create:cutting':
+		case 'create:sandpaper_polishing':
+			// So do these create recipe types
+			break;
+		case 'create:pressing':
+		case 'create:splashing':
+		case 'create:mixing':
+		case 'create:compacting':
+		default:
+			break;
+	}
+	return $results;
 }
+
+get_recipe_item_ingredients('create/crushing/aluminum_ore');
 ?>
