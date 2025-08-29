@@ -16,3 +16,8 @@ TO DO:
 	- Add loot table mob delegation for mobData
 	- Get a way to get mobs default stats?
 	- Make potionEffectData (effect|desc)
+IconExporter is reccomended to be set at 64px or 128px for better clarity.
+	It's also reccomended to not close or have minecraft minimized/on fullscreen while exporting.
+	The mod actually sets the icon size depending on resolution.
+	It depends on how it shows on JEI so if the item is not shown on JEI or is dependant in NBT I have to account for it-
+		So maybe like add a failsafe/checker that accounts for NBT variants.

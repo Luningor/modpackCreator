@@ -13,6 +13,7 @@ include_once 'get_recipe_x.php';
 	//			/recipes/
 	//			/registries/
 	//			/tags/
+	//			/icon-exports-x32/
 function initialize_generated_data() {
 	// As this function takes forever, it's best to disable the execution max time for the entire duration of it
 	$limit = ini_get('max_execution_time');
@@ -36,7 +37,7 @@ function initialize_generated_data() {
 		foreach($rawItemJSON as $itemID => $data) {
 			$itemJSON->itemIDs[$i] = $itemID;
 			$itemJSON->data->$itemID = json_decode('{}');
-			$itemJSON->data->$itemID->icon = str_replace(":", "/", $itemID).'.png';
+			$itemJSON->data->$itemID->icon = file_exists('../savedData/icon-exports-x32/'.str_replace(":", "__", $itemID).'.png') ? str_replace(":", "__", $itemID) : "missing_icon";
 			$itemJSON->data->$itemID->tags = [];
 			$itemJSON->data->$itemID->block_tags = [];
 			$itemJSON->data->$itemID->loot_tables = [];
