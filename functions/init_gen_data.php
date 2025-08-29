@@ -33,11 +33,15 @@ function initialize_generated_data() {
 		$itemJSON->data = json_decode('{}');
 		$itemJSON->itemIDs = [];
 		$i = 0;
-	
+
 		foreach($rawItemJSON as $itemID => $data) {
 			$itemJSON->itemIDs[$i] = $itemID;
 			$itemJSON->data->$itemID = json_decode('{}');
-			$itemJSON->data->$itemID->icon = file_exists('../savedData/icon-exports-x32/'.str_replace(":", "__", $itemID).'.png') ? str_replace(":", "__", $itemID) : "missing_icon";
+			$iconID = str_replace(":", "__", $itemID);
+			$itemJSON->data->$itemID->icon = file_exists('../savedData/icon-exports-x32/'.$iconID.'.png') ? $iconID : "missing_icon";
+			$itemJSON->data->$itemID->variants = glob('../savedData/icon-exports-x32/'.$iconID.'__{*'.'.png');
+			foreach ($itemJSON->data->$itemID->variants as $index => $value)
+				$itemJSON->data->$itemID->variants[$index] = str_replace('../', '', $value);
 			$itemJSON->data->$itemID->tags = [];
 			$itemJSON->data->$itemID->block_tags = [];
 			$itemJSON->data->$itemID->loot_tables = [];

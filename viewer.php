@@ -16,9 +16,8 @@
 			if(file_exists("savedData/icon-exports-x32/{$itemData->data->$item->icon}.png")) 
 				echo "	<img width=\"32\" height=\"32\" src=\"savedData/icon-exports-x32/{$itemData->data->$item->icon}.png\">";
 			// First variant
-			// NOTE: For in-dev reasons, this is currently if the NBT attached is {Damage:0} i.e. it's a durability full item
-			else if(file_exists("savedData/icon-exports-x32/{$itemData->data->$item->icon}__{Damage__0}.png"))
-				echo "	<img width=\"32\" height=\"32\" src=\"savedData/icon-exports-x32/{$itemData->data->$item->icon}__{Damage__0}.png\">";
+			else if(!empty($itemData->data->$item->variants))
+				echo "	<img width=\"32\" height=\"32\" src=\"{$itemData->data->$item->variants[0]}\">";
 			else
 			// No item icon, fallback to missing texture
 				echo "	<img width=\"32\" height=\"32\" src=\"pageresources/missing_texture.png\">";
