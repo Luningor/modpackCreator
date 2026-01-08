@@ -119,6 +119,11 @@ function initialize_generated_data() {
 		foreach($rawFluidJSON as $fluidID => $data) {
 			$fluidJSON->fluidIDs[$i] = $fluidID;
 			$fluidJSON->data->$fluidID = json_decode('{}');
+			$iconID = 'fluid__'.str_replace(":", "__", $fluidID);
+			$fluidJSON->data->$fluidID->icon = file_exists('../savedData/icon-exports-x32/'.$iconID.'.png') ? $iconID : "missing_icon";
+			$fluidJSON->data->$fluidID->variants = glob('../savedData/icon-exports-x32/'.$iconID.'__{*'.'.png');
+			foreach ($fluidJSON->data->$fluidID->variants as $index => $value)
+				$fluidJSON->data->$fluidID->variants[$index] = str_replace('../', '', $value);
 			$fluidJSON->data->$fluidID->tags = [];
 			$fluidJSON->data->$fluidID->loot_tables = [];
 			$fluidJSON->data->$fluidID->recipes_ingredient = [];

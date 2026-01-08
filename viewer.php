@@ -26,5 +26,24 @@
 		}
 	?>
 	</ol>
+	<ol>
+	<?php
+		$fluidData = file_to_json('generatedData/fluidData.json');
+		foreach ($fluidData->data as $fluid => $value) {
+			echo "<li>";
+			// Same image as ID
+			if(file_exists("savedData/icon-exports-x32/{$fluidData->data->$fluid->icon}.png")) 
+				echo "	<img width=\"32\" height=\"32\" src=\"savedData/icon-exports-x32/{$fluidData->data->$fluid->icon}.png\">";
+			// First variant
+			else if(!empty($fluidData->data->$fluid->variants))
+				echo "	<img width=\"32\" height=\"32\" src=\"{$fluidData->data->$fluid->variants[0]}\">";
+			else
+			// No fluid icon, fallback to missing texture
+				echo "	<img width=\"32\" height=\"32\" src=\"pageresources/missing_texture.png\">";
+			echo "  <p style=\"display: inline\">{$fluid}</p>";
+			echo "</li>";
+		}
+	?>
+	</ol>
 </body>
 </html>
