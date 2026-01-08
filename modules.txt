@@ -1,0 +1,87 @@
+Viewer
+	Item viewer
+		Search
+			By name, namespace, id, recipes, tier, requirement, stage, EMC
+		Data: name, namespace:id, icon, recipes, loot tables, tier, requirement, stage, EMC, attributes if any
+	Mob viewer
+		Search
+			By name, namespace, id, health, damage, armor, tier, stage
+		Data: name namespace:id, health, damage, armor, tier, stage, biomes it spawns in
+	Recipe viewer
+		Search
+			By type, namespace, id, ingredients, output
+	Loot table viewer
+		Search
+			By id, namespace, drops
+
+Editors
+	Config editor
+		By config
+	Recipe editor
+		Search recipes
+			Edit recipe
+			Replace all instances of ingredient
+			Remove recipe
+			Remove all instances of ingredient
+			Remove all recipes from a type
+		Add recipe
+	Obliterate
+		From inventory
+		From creative inventory
+		From trades
+		From recipes
+		By NBT (potions/enchanted books/etc)
+		Partial obliteration
+	Loot editor
+		Search loot tables
+			Edit loot table
+			Remove loot table
+			Replace all instances of item
+		Create loot table
+	Tag editor
+		Add tag to item
+		Add tag to tag
+		Tag painter
+		Remove tag from item
+		Remove tag from tag
+	Tier editor
+		Damage calculator
+		Add mob to tier
+		Add item to tier
+	Stages editor
+		Add stage
+		Remove stage
+		Add mob to stage
+		Remove mob from stage
+		Add item to stage
+		Remove item from stage
+		Stage painter (mobs)
+		Stage painter (items)
+	Attribute requirement editor
+		Add requirement to item
+		Remove requirement from item
+		Remove requirement from all items
+	Super Duper Ultra Hyper Tamer config
+		Blacklist mob from taming
+		Add mob taming
+	Structurify config
+Config
+
+Import
+	Import generated data
+		Import config file
+		Import fluid/item/mob data
+	Import folders
+		Import config/
+		Import icons/
+		Import loot_tables/
+		Import recipes/
+		Import registries/
+		Import tags/
+	Import existing modpack zip
+
+Export
+	Export generated data
+		Export config file
+		Export fluid/item/mob data
+	Export modpack zip
