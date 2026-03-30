@@ -38,14 +38,25 @@ And done! Now whenever you want to load it up, just repeat steps 4 and 5 and you
 ## How to set it up
 By itself, the modpack is capable of retrieving most of the data by itself, but things like item/entity models and villager trades are admittedly outside my scope, reach and understanding. Thus, to fill in my shortcomings, I've mostly simplified this whole ordeal in such a way one has to specify as little as possible to get it started up. That said, I will refer to the installation path (i.e. **localhost/modpackCreator-main**) as **modpackCreator**, and your Minecraft's modpack installation path as **modpackPath** henceforth for simplicity.
 1. In your browser, go to **modpackCreator/config**.
-2. Where it says _"Installation path"_, put the path of where your modpack is and click _"Save"_. In my case, it's _"C:\Users\Luningor\AppData\Roaming\PrismLauncher\instances\DEBUGTESTING\minecraft"_. Check online where your particular launcher saves it.
-3. Download [Custom Villager Trades](https://www.curseforge.com/minecraft/mc-mods/custom-villager-trades-forge) (and its dependency [Architectury](https://curseforge.com/minecraft/mc-mods/architectury-api)), [IconExporter](https://www.curseforge.com/minecraft/mc-mods/iconexporter) (and its dependency [Cyclops Core](https://www.curseforge.com/minecraft/mc-mods/cyclops-core)), [JEI](https://www.curseforge.com/minecraft/mc-mods/jei) and [JsonEM](https://modrinth.com/mod/jsonem), and put them on **modpackPath/mods**.
-4. Open **modpackPath/config/jsonem.toml** and make sure that `dump_models = true`. That way, when you join your world, all the entity models will export automatically to modpackPath/jsonem_dump.
+2. Where it says _"Installation path"_, put the path of where your modpack is and click _"Save"_. 
+	- In my case, it's _"C:\Users\Luningor\AppData\Roaming\PrismLauncher\instances\DEBUGTESTING\minecraft"_. Check online where your particular launcher saves it.
+3. Download 
+	- [Custom Villager Trades](https://www.curseforge.com/minecraft/mc-mods/custom-villager-trades-forge) (and its dependency [Architectury](https://curseforge.com/minecraft/mc-mods/architectury-api)), 
+	- [IconExporter](https://www.curseforge.com/minecraft/mc-mods/iconexporter) (and its dependency [Cyclops Core](https://www.curseforge.com/minecraft/mc-mods/cyclops-core)), 
+	- [JEI](https://www.curseforge.com/minecraft/mc-mods/jei) and 
+	- [JsonEM](https://modrinth.com/mod/jsonem),
+	and put them on **modpackPath/mods**.
+4. Open **modpackPath/config/jsonem.toml** and make sure that `dump_models = true`. 
+	- That way, when you join your world, all the entity models will export automatically to modpackPath/jsonem_dump.
 5. Boot up your modpack and join any world.
-6. **WITHOUT RESIZING YOUR WINDOW** (THIS INCLUDES SWITCHING FROM FULLSCREEN) open chat, type `/iconexporter export`, then enter. This will export all item icons as shown on JEI to **modpackPath/iconexports-x64**. 
+6. **WITHOUT RESIZING YOUR WINDOW** (THIS INCLUDES SWITCHING FROM FULLSCREEN) open chat, type `/iconexporter export`, then enter. 
+	- This will export all item icons as shown on JEI to **modpackPath/iconexports-x64**. 
 	- This is needed for speed and accuracy. If for any reason I cannot find the model to an item, this will come as a default for it. Also, when searching for items on big modpacks, you will find that loading 17.000 (not exaggerating, I'm running a medium modpack with 170 mods. That's MY number) item models when searching slows up your stuff significantly. I will use png's which are way faster to load.
-7. When it finishes exporting, open up chat again and enter `/exportCVT`. This will export all existing trades to **modpackPath/config/custom** trades as JSONs.
-8. Finally, type and enter `/kjs export` and let it reload. This will generate technical data about the pack to **modpackPath/local/kubejs/export** that LAMM will use later.
+7. When it finishes exporting, open up chat again and enter `/exportCVT`. 
+	- This will export all existing trades to **modpackPath/config/custom** trades as JSONs.
+8. Finally, type and enter `/kjs export` and let it reload. 
+	- This will generate technical data about the pack to **modpackPath/local/kubejs/export** that LAMM will use later.
+
 And that's all! Mostly. I do have a backup way to get recipes and loot tables if you don't want to sit 10 hours for your modpack jars to decompile or if you can't afford the disk space to hold them. Which fair, I've been there; that's why I made it. There will be an option to setup the exporter automatically in a way that only requires of you to click one button and open a Minecraft world on config. Something along the lines of _"Use legacy exporter"_.
 
 Once you do all this with ALL the mods you want in, LAMM should be able to decompile the thing, save the assets, load the data one by one mantaining dependency hierarchy then save a would-be loaded datapack.
