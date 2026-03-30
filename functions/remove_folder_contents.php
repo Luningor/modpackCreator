@@ -1,5 +1,7 @@
 <?php
 function remove_folder_contents($path) {
+	$path = str_replace("/", "\\", $path);
+
 	$dir = new RecursiveDirectoryIterator(
 	    $path, FilesystemIterator::SKIP_DOTS);
 	 
